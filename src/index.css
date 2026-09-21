@@ -1,0 +1,268 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ============================================================
+   设计令牌
+   全站的圆角、描边、阴影、层级只在这里定义一次，
+   组件里只引用变量，避免同一个「卡片」在不同页面长得不一样。
+   ============================================================ */
+:root {
+  /* 渠道品牌色 */
+  --c-xiaohongshu: #ff4d6d;
+  --c-douyin: #7c5cff;
+  --c-shipinhao: #21b573;
+
+  /* 状态色 */
+  --c-good: #21b573;
+  --c-warn: #f5a524;
+  --c-bad: #e5484d;
+  --c-info: #3b82f6;
+  --c-idle: #9aa2b1;
+
+  /* 文字层级：ink > ink-2 > ink-3 */
+  --c-ink: #101828;
+  --c-ink-2: #475467;
+  --c-ink-3: #98a2b3;
+
+  /* 描边层级：line > line-soft */
+  --c-line: #e7e9ef;
+  --c-line-soft: #f1f3f7;
+
+  /* 表面 */
+  --c-canvas: #f4f5f8;
+  --c-surface: #ffffff;
+  --c-surface-2: #fafbfc;
+
+  /* 圆角 */
+  --r-card: 14px;
+  --r-inner: 12px;
+  --r-control: 10px;
+
+  /* 三段阴影：静置 / 悬浮 / 浮层 */
+  --sh-card: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --sh-hover: 0 8px 20px -8px rgba(16, 24, 40, 0.14), 0 2px 6px -2px rgba(16, 24, 40, 0.05);
+  --sh-pop: 0 14px 34px -10px rgba(16, 24, 40, 0.18);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #dbeafe;
+}
+
+/* 键盘焦点环：鼠标点击不显示，Tab 切换才显示 */
+:where(a, button, [role='button'], input, select, textarea):focus-visible {
+  outline: 2px solid var(--c-info);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ============================================================
+   卡片
+   ============================================================ */
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-card);
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+/* 静置卡片也带一点悬浮反馈，鼠标扫过时更容易感知「这是一个信息块」 */
+.card-hover:hover {
+  border-color: #dcdfe8;
+  box-shadow: var(--sh-hover);
+  transform: translateY(-1px);
+}
+
+.card-pad {
+  padding: 18px 20px;
+}
+
+/* 数字统一等宽，避免表格里的百分比左右跳动 */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ============================================================
+   表格
+   ============================================================ */
+table.grid-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.grid-table th {
+  text-align: left;
+  font-weight: 500;
+  color: #667085;
+  font-size: 11.5px;
+  letter-spacing: 0.01em;
+  background: var(--c-surface-2);
+  padding: 9px 14px;
+  white-space: nowrap;
+  border-bottom: 1px solid #eceef3;
+}
+
+table.grid-table th:first-child {
+  border-top-left-radius: var(--r-inner);
+}
+
+table.grid-table th:last-child {
+  border-top-right-radius: var(--r-inner);
+}
+
+table.grid-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--c-line-soft);
+  font-size: 12.5px;
+  color: #1d2939;
+  white-space: nowrap;
+}
+
+table.grid-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+table.grid-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+table.grid-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* 空状态行：不要悬浮底色，也不要分隔线 */
+table.grid-table tbody tr.row-empty,
+table.grid-table tbody tr.row-empty:hover {
+  background: transparent;
+}
+
+table.grid-table tbody tr.row-empty td {
+  border-bottom: none;
+  padding: 0;
+}
+
+table.grid-table td.wrap {
+  white-space: normal;
+  min-width: 164px;
+  max-width: 420px;
+  line-height: 1.65;
+}
+
+table.grid-table th.num,
+table.grid-table td.num {
+  text-align: right;
+}
+
+/* ============================================================
+   滚动条
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d5d9e2;
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b4bccb;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ============================================================
+   动效
+   ============================================================ */
+@keyframes imc-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade-up {
+  animation: imc-fade-up 0.4s ease-out both;
+}
+
+/* 骨架屏的流光 */
+@keyframes imc-shimmer {
+  0% {
+    background-position: -480px 0;
+  }
+  100% {
+    background-position: 480px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #eceff4 0%, #f6f7fa 42%, #eceff4 84%);
+  background-size: 960px 100%;
+  animation: imc-shimmer 1.3s linear infinite;
+  border-radius: 8px;
+}
+
+/* ============================================================
+   图表
+   ============================================================ */
+.recharts-wrapper text {
+  font-family: var(--font-sans);
+}
+
+/* 图表悬浮时不要出现默认的蓝色描边 */
+.recharts-wrapper:focus,
+.recharts-surface:focus {
+  outline: none;
+}
+
+/* 减少动效偏好：关掉位移与流光 */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .skeleton {
+    animation: none;
+  }
+
+  .card-hover:hover {
+    transform: none;
+  }
+}

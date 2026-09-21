@@ -141,3 +141,9 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# 离线演示版（构建产物，不需要提交）
+demo/
+
+# 本地工作笔记与内部工具（不参与构建，不提交）
+.workbuddy/
