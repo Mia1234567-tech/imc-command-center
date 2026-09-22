@@ -267,3 +267,7 @@ export const tasks: TaskItem[] = load<TaskItem[]>('tasks', ...) ?? defaultTasks
 ## 八、免责声明
 
 本项目仅用于个人学习与求职作品集展示，所有数据均为虚构，与任何真实企业、客户、业务无关。
+
+## 九、补充
+What I learned
+The first version focused on visualizing campaign information. After testing it against real AE workflows, I found that visualization alone did not significantly improve daily execution efficiency. This led me to shift the project from a dashboard-oriented concept toward task automation and workflow assistance.
